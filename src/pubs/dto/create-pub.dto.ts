@@ -4,5 +4,5 @@ export class CreatePubDto {
     rating?: number;
     reviewCount?: number;
     url?: string;
-    coordinates?: string;
+    coordinates?: string[];
 }

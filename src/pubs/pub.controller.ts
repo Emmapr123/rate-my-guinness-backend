@@ -11,7 +11,7 @@ import { CreatePubDto } from './dto/create-pub.dto';
 import { Pub } from './entities/pub.entity';
 import { PubService } from './pub.service';
 
-@Controller('api/v1/relaxed-constraints')
+@Controller('api/v1/pub')
 export class PubController {
     constructor(
         private readonly PubsService: PubService,
@@ -29,26 +29,26 @@ export class PubController {
         return this.PubsService.findAll();
     }
 
-    @Get(':constraintId')
+    @Get(':pubId')
     async findOne(
-        @Param('constraintId') constraintId: string,
+        @Param('pubId') pubId: string,
     ): Promise<Pub> {
-        return this.PubsService.findOne(constraintId);
+        return this.PubsService.findOne(pubId);
     }
 
-    @Patch(':constraintId')
+    @Patch(':pubId')
     async update(
-        @Param('constraintId') constraintId: string,
+        @Param('pubId') pubId: string,
         @Body() Pub: CreatePubDto,
     ) {
         return this.PubsService.update(
-            constraintId,
+            pubId,
             Pub,
         );
     }
 
-    @Delete(':constraintId')
-    async delete(@Param('constraintId') constraintId: string): Promise<any> {
-        return this.PubsService.remove(constraintId);
+    @Delete(':pubId')
+    async delete(@Param('pubId') pubId: string): Promise<any> {
+        return this.PubsService.remove(pubId);
     }
 }

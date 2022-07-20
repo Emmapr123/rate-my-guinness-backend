@@ -13,10 +13,7 @@ const secondPub: CreatePubDto = {
   pubId: '2',
   name: 'this is also a Pub',
 };
-const arrayOfPubs: CreatePubDto[] = [
-  firstPub,
-  secondPub,
-];
+const arrayOfPubs: CreatePubDto[] = [firstPub, secondPub];
 const updatedPub: CreatePubDto = {
   pubId: '1',
   name: 'an Updated Pub',
@@ -45,9 +42,7 @@ describe('PubService', () => {
     }).compile();
 
     service = module.get<PubService>(PubService);
-    mockedRepository = module.get<Repository<Pub>>(
-      getRepositoryToken(Pub),
-    );
+    mockedRepository = module.get<Repository<Pub>>(getRepositoryToken(Pub));
   });
 
   it('should be defined', () => {

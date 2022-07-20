@@ -68,8 +68,6 @@ describe('relaxedPubs (e2e)', () => {
   });
 
   it('/api/v1/pub DELETE', async () => {
-    await request(app.getHttpServer())
-      .delete('/api/v1/pub/1')
-      .expect(200);
+    await request(app.getHttpServer()).delete('/api/v1/pub/1').expect(200);
   });
 });

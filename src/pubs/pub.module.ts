@@ -5,8 +5,8 @@ import { PubController } from './pub.controller';
 import { PubService } from './pub.service';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Pub])],
-    controllers: [PubController],
-    providers: [PubService],
+  imports: [TypeOrmModule.forFeature([Pub])],
+  controllers: [PubController],
+  providers: [PubService],
 })
-export class PubModule { }
+export class PubModule {}

@@ -21,14 +21,10 @@ describe('RelaxedPubsController', () => {
           useValue: {
             insertOne: jest
               .fn()
-              .mockImplementation(() =>
-                Promise.resolve({ id: 1, ...newPub }),
-              ),
+              .mockImplementation(() => Promise.resolve({ id: 1, ...newPub })),
             findAll: jest
               .fn()
-              .mockImplementation(() =>
-                Promise.resolve([firstPub, newPub]),
-              ),
+              .mockImplementation(() => Promise.resolve([firstPub, newPub])),
             findOne: jest
               .fn()
               .mockImplementation(() => Promise.resolve(firstPub)),
@@ -43,9 +39,7 @@ describe('RelaxedPubsController', () => {
       ],
     }).compile();
 
-    controller = module.get<PubController>(
-      PubController,
-    );
+    controller = module.get<PubController>(PubController);
   });
 
   it('should be defined', () => {
@@ -63,10 +57,7 @@ describe('RelaxedPubsController', () => {
 
   describe('get', () => {
     it('should get all accounts', async () => {
-      await expect(controller.findAll()).resolves.toEqual([
-        firstPub,
-        newPub,
-      ]);
+      await expect(controller.findAll()).resolves.toEqual([firstPub, newPub]);
     });
 
     it('should get one restraint by the restraintId', async () => {

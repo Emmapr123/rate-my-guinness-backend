@@ -11,9 +11,7 @@ export class PubService {
     private pubRepository: Repository<Pub>,
   ) {}
 
-  async insertOne(
-    pub: CreatePubDto,
-  ): Promise<any> {
+  async insertOne(pub: CreatePubDto): Promise<any> {
     const newPub = this.pubRepository.create(pub);
     return this.pubRepository.save(newPub);
   }
@@ -29,10 +27,7 @@ export class PubService {
     return pub;
   }
 
-  update(
-    pubId: string,
-    pub: CreatePubDto,
-  ): Promise<UpdateResult> {
+  update(pubId: string, pub: CreatePubDto): Promise<UpdateResult> {
     return this.pubRepository.update(pubId, pub);
   }
 

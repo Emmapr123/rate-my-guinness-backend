@@ -1,0 +1,49 @@
+version: "3.8"
+volumes:
+    db-data:
+        driver: local
+services:
+    postgres:
+        image: postgres
+        ports:
+          - 5432:5432
+        volumes:
+            - db-data:/var/lib/postgresql/data
+        env_file:
+            - .env.docker
+
+    account_status_api_image_builder:
+        &account_status_api_image
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - ./src:/app/src
+            - ./package.json:/app/package.json
+            - ./tsconfig.build.json:/app/tsconfig.build.json
+            - ./tsconfig.json:/app/tsconfig.json
+        command: sh -c "echo 'Built the account status api image.'"
+        env_file:
+            - .env.docker
+
+    migration_runner:
+        <<: *account_status_api_image
+        ports:
+            - "3001:3001"
+        links:
+            - "postgres"
+        depends_on:
+            - "postgres"
+        command: sh -c "sleep 5 && yarn typeorm:migration:run"
+
+    account_status_api:
+        <<: *account_status_api_image
+        ports:
+            - "3000:3000"
+        links:
+            - "postgres"
+        depends_on:
+            - "postgres"
+            - "migration_runner"
+        command: sh -c "sleep 10 && yarn start:dev"
+        restart: always

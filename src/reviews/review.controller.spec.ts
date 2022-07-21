@@ -1,6 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { Pub } from 'src/pubs/entities/pub.entity';
-import { User } from 'src/users/entities/user.entity';
 import { ReviewController } from './review.controller';
 import { ReviewService } from './review.service';
 
@@ -35,7 +33,6 @@ describe('ReviewsController', () => {
               .mockImplementation(() =>
                 Promise.resolve({ id: 1, ...newReview }),
               ),
-            save: (user: User) => user,
             findAll: jest
               .fn()
               .mockImplementation(() =>

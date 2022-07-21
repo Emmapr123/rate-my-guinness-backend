@@ -43,8 +43,8 @@ describe('Reviews (e2e)', () => {
     delete: jest.fn(),
   };
 
-  const mockUsersRepository = {}
-  const mockPubsRepository = {}
+  const mockUsersRepository = {};
+  const mockPubsRepository = {};
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [ReviewModule],

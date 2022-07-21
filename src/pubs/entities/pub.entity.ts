@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Review } from '../../reviews/entities/review.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity()
 export class Pub {
@@ -19,4 +20,9 @@ export class Pub {
 
   @Column('int', { nullable: true, array: true })
   coordinates: string[];
+
+  @OneToMany((type) => Review, (review) => review.pub)
+  // cascade: ['insert', 'remove', 'update'],
+  // onDelete: 'CASCADE',
+  review?: Review[];
 }

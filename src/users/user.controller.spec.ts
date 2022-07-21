@@ -9,7 +9,7 @@ const firstUser = {
 const newUser = { userId: '1', userName: 'This is a new User' };
 const updatedUser = { userId: '3', userName: 'an updated User' };
 
-describe('RelaxedUsersController', () => {
+describe('UsersController', () => {
   let controller: UserController;
 
   beforeEach(async () => {

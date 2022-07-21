@@ -12,10 +12,10 @@ const existingPubs = [
 ];
 const changedPub = { name: 'This is a changed Pub' };
 
-describe('relaxedPubs (e2e)', () => {
+describe('Pubs (e2e)', () => {
   let app: INestApplication;
 
-  const mockRelaxedPubsRepository = {
+  const mockPubsRepository = {
     find: jest.fn().mockResolvedValue(existingPubs),
     save: jest.fn().mockResolvedValue(newPub),
     create: jest.fn().mockResolvedValue(newPub),
@@ -28,7 +28,7 @@ describe('relaxedPubs (e2e)', () => {
       imports: [PubModule],
     })
       .overrideProvider(getRepositoryToken(Pub))
-      .useValue(mockRelaxedPubsRepository)
+      .useValue(mockPubsRepository)
       .compile();
 
     app = moduleFixture.createNestApplication();

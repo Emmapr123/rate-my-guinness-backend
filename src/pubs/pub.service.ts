@@ -11,7 +11,7 @@ export class PubService {
     private pubRepository: Repository<Pub>,
   ) {}
 
-  async insertOne(pub: CreatePubDto): Promise<Pub> {
+  insertOne(pub: CreatePubDto): Promise<Pub> {
     const newPub = this.pubRepository.create(pub);
     return this.pubRepository.save(newPub);
   }

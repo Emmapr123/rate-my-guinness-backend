@@ -9,7 +9,7 @@ const firstPub = {
 const newPub = { PubId: '1', name: 'This is a new Pub' };
 const updatedPub = { PubId: '3', name: 'an updated Pub' };
 
-describe('RelaxedPubsController', () => {
+describe('PubsController', () => {
   let controller: PubController;
 
   beforeEach(async () => {

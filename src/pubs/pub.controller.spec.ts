@@ -1,12 +1,30 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { when } from 'jest-when';
+import { Pub } from './entities/pub.entity';
 import { PubController } from './pub.controller';
 import { PubService } from './pub.service';
 
-const firstPub = {
-  PubId: '3',
+const firstPub: Pub = {
+  pubId: '3',
   name: 'the very first Pub',
+  coordinates: '',
+  rating: 8,
+  reviewCount: 1,
+  url: '',
 };
-const newPub = { PubId: '1', name: 'This is a new Pub' };
+const pubByCoordinates: Pub = {
+  pubId: '8',
+  name: 'the very first Pub',
+  coordinates: '123, 123',
+  rating: 8,
+  reviewCount: 1,
+  url: '',
+};
+const newPub = {
+  PubId: '1',
+  name: 'This is a new Pub',
+  coordinates: '453, 453',
+};
 const updatedPub = { PubId: '3', name: 'an updated Pub' };
 
 describe('PubsController', () => {
@@ -22,12 +40,11 @@ describe('PubsController', () => {
             insertOne: jest
               .fn()
               .mockImplementation(() => Promise.resolve({ id: 1, ...newPub })),
-            findAll: jest
+            findAll: jest.fn(),
+            findOne: jest.fn(),
+            findOneByLocation: jest
               .fn()
-              .mockImplementation(() => Promise.resolve([firstPub, newPub])),
-            findOne: jest
-              .fn()
-              .mockImplementation(() => Promise.resolve(firstPub)),
+              .mockImplementation(() => Promise.resolve(newPub)),
             update: jest
               .fn()
               .mockImplementation(() =>
@@ -56,11 +73,31 @@ describe('PubsController', () => {
   });
 
   describe('get', () => {
-    it('should get all accounts', async () => {
-      await expect(controller.findAll()).resolves.toEqual([firstPub, newPub]);
+    it('should get all pubs', async () => {
+      controller.findAll = jest.fn();
+
+      when(controller.findAll).mockResolvedValue([firstPub, pubByCoordinates]);
+      await expect(controller.findAll()).resolves.toEqual([
+        firstPub,
+        pubByCoordinates,
+      ]);
     });
 
-    it('should get one restraint by the restraintId', async () => {
+    it('should get one pub by coordinates', async () => {
+      controller.findAll = jest.fn();
+      when(controller.findAll)
+        .calledWith('123, 123')
+        .mockResolvedValue(pubByCoordinates);
+      await expect(controller.findAll('123, 123')).resolves.toEqual(
+        pubByCoordinates,
+      );
+    });
+
+    it('should get one pub by the pubId', async () => {
+      controller.findOne = jest.fn();
+      when(controller.findOne)
+        .calledWith('3')
+        .mockResolvedValue({ ...firstPub });
       await expect(controller.findOne('3')).resolves.toEqual(firstPub);
     });
   });

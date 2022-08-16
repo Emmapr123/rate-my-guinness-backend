@@ -18,8 +18,8 @@ export class Pub {
   @Column({ nullable: true })
   url: string;
 
-  @Column('int', { nullable: true, array: true })
-  coordinates: string[];
+  @Column({ nullable: true })
+  coordinates: string;
 
   @OneToMany((type) => Review, (review) => review.pub)
   // cascade: ['insert', 'remove', 'update'],

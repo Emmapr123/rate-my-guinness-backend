@@ -6,8 +6,10 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { CreatePubDto } from './dto/create-pub.dto';
+import { UpdatePubDto } from './dto/update-pub.dto';
 import { Pub } from './entities/pub.entity';
 import { PubService } from './pub.service';
 
@@ -21,8 +23,12 @@ export class PubController {
   }
 
   @Get()
-  findAll(): Promise<Pub[]> {
-    return this.PubsService.findAll();
+  async findAll(
+    @Query('coordinates') coordinates?: string,
+  ): Promise<Pub | Pub[]> {
+    return coordinates
+      ? this.PubsService.findOneByLocation(coordinates)
+      : this.PubsService.findAll();
   }
 
   @Get(':pubId')
@@ -31,7 +37,7 @@ export class PubController {
   }
 
   @Patch(':pubId')
-  async update(@Param('pubId') pubId: string, @Body() Pub: CreatePubDto) {
+  async update(@Param('pubId') pubId: string, @Body() Pub: UpdatePubDto) {
     return this.PubsService.update(pubId, Pub);
   }
 

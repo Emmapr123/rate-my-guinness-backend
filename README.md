@@ -29,5 +29,5 @@ yarn typeorm:migration:run
 Make sure not to make changes to the database that will break it or that will complain if the database is populated (it is fine if it is empty)
 If you want to undo a migration that you have already run, run
 ```
-yarn typeorm:migration revert
+yarn typeorm migration:revert
 ```

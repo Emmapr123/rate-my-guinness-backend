@@ -4,12 +4,16 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Pub } from '../../src/pubs/entities/pub.entity';
 import { PubModule } from '../../src/pubs/pub.module';
 import { agent as request } from 'supertest';
+import { when } from 'jest-when';
 
-const newPub = { name: 'this is a new Pub' };
+const newPub = { name: 'this is a new Pub', pubId: '5' };
 const existingPubs = [
   { name: 'This one is not new' },
   { name: 'neither is this one' },
 ];
+const pubById = { pubId: '1', name: 'this is a new Pub' };
+const pubByCoordinates = { coordinates: '555' };
+
 const changedPub = { name: 'This is a changed Pub' };
 
 describe('Pubs (e2e)', () => {
@@ -17,6 +21,7 @@ describe('Pubs (e2e)', () => {
 
   const mockPubsRepository = {
     find: jest.fn().mockResolvedValue(existingPubs),
+    findOne: jest.fn(),
     save: jest.fn().mockResolvedValue(newPub),
     create: jest.fn().mockResolvedValue(newPub),
     update: jest.fn().mockResolvedValue(changedPub),
@@ -45,6 +50,9 @@ describe('Pubs (e2e)', () => {
   });
 
   it('/api/v1/pub CREATE', async () => {
+    when(mockPubsRepository.findOne)
+      .calledWith('5')
+      .mockResolvedValueOnce(undefined);
     const response = await request(app.getHttpServer())
       .post('/api/v1/pub')
       .send(newPub)
